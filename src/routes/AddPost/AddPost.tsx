@@ -16,29 +16,31 @@ function AddPost() {
   const { user } = useUserContext();
   const navigate = useNavigate();
   const submitPost = async () => {
-    const token = await auth.currentUser?.getIdToken();
-    const result = await fetch(`${import.meta.env.VITE_SERVER}/fb/createPost/${user?.uid}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer" + token,
-      },
-      body: JSON.stringify({
-        displayName: user?.displayName || "",
-        title,
-        message,
-        selected,
-      }),
-    });
-    const answer = await result.text();
-    if (answer === "Success") {
-      setTitle("");
-      setMessage("");
-      setSelected(undefined);
-      setIsTrackSelected(false);
-      navigate("/dashboard");
-    } else {
-      alert("Something went wrong, please try again");
+    try {
+      const token = await auth.currentUser?.getIdToken();
+      const result = await fetch(`${import.meta.env.VITE_SERVER}/fb/createPost/${user?.uid}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+        body: JSON.stringify({
+          displayName: user?.displayName || "",
+          title,
+          message,
+          selected,
+        }),
+      });
+      const answer = await result.text();
+      if (answer === "Success") {
+        setTitle("");
+        setMessage("");
+        setSelected(undefined);
+        setIsTrackSelected(false);
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
   const trackSelectedPreview = (
