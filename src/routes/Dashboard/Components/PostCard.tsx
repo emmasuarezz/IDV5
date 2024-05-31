@@ -25,35 +25,21 @@ function PostCard({ post, profile }: { post: Post; profile: boolean }) {
     }
   };
 
-  const date = profile ? null : post.timestamp.toDate();
-  const day = profile ? null : date!.getDate();
-  const unformattedMonth = profile ? null : date!.toLocaleString("default", { month: "short" });
-  const month = profile ? null : unformattedMonth!.charAt(0).toUpperCase() + unformattedMonth!.slice(1);
-
   return (
-    <div
-      onMouseEnter={() => {
-        handleHoverEnter();
-        handlePlay();
-      }}
-      onMouseLeave={() => {
-        handleHoverLeave();
-        handlePause();
-      }}
-      className={`${styles.postCard} ${
-        hover ? (profile ? styles.profile_postCardHovered : styles.postCardHovered) : null
-      }`}
-    >
-      <img src={post.selected.cover} alt="" />
-
-      <div className={`${styles.topText} ${hover ? styles.isVisible : null}`}>
-        <p className={styles.user}>{post.displayName}</p>
-        {profile ? null : (
-          <p className={styles.date}>
-            On {month} {day}
-          </p>
-        )}
-      </div>
+    <div className={`${styles.postCard}`}>
+      <img
+        onMouseEnter={() => {
+          handleHoverEnter();
+          handlePlay();
+        }}
+        onMouseLeave={() => {
+          handleHoverLeave();
+          handlePause();
+        }}
+        src={post.selected.cover}
+        alt=""
+      />
+      <img className={styles.avatarUser} src={post.userAvatar ? post.userAvatar : ""} alt="" />
 
       <audio ref={audioRef} src={post.selected.preview} style={{ display: "hidden" }}></audio>
     </div>

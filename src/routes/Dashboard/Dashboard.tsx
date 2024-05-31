@@ -9,6 +9,7 @@ import firebase from "firebase/compat/app";
 export type Post = {
   id: string;
   displayName: string;
+  userAvatar: string;
   title: string;
   message: string;
   selected: {
@@ -49,7 +50,7 @@ function Dashboard() {
         <p>check out what people have been listening</p>
         <section className={styles.posts}>
           {posts.length > 0 ? (
-            posts.map((post) => <PostCard key={post.id} post={post} profile={false} />)
+            posts.map((post) => <PostCard key={post.id} post={post} profile={true} />)
           ) : (
             <p className={styles.fetchingPosts}>Loading...</p>
           )}

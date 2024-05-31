@@ -46,7 +46,7 @@ function Profile() {
             <p>@{user?.username}</p>
           </div>
         </section>
-        <button className={styles.editProfile}>edit profile</button>
+        {/* <button className={styles.editProfile}>edit profile</button> */}
       </section>
       {/* Posts and friends tabs */}
       <section className={`${utils.flex} ${utils.g2} ${utils.w_full}`}>
