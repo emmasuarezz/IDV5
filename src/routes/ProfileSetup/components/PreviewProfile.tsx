@@ -60,9 +60,8 @@ function PreviewProfile({ userPreview }: { userPreview: UserPreviewType }) {
     const finalUsername = username.charAt(0) === "@" ? username.slice(1) : username;
     const avatarFilename = avatarUrl.split("/").pop();
     const bannerFilename = bannerUrl.split("/").pop();
-    const avatarId = avatarFilename?.split(".").shift();
-    const bannerId = bannerFilename?.split(".").shift();
-
+    const avatarId = avatarFilename?.split(".")[0].split("-")[0];
+    const bannerId = bannerFilename?.split(".")[0].split("-")[0];
     const request = { user: userPreview, bannerId: bannerId, username: finalUsername, avatarId: avatarId };
 
     try {
