@@ -50,7 +50,7 @@ function Dashboard() {
         <p>check out what people have been listening</p>
         <section className={styles.posts}>
           {posts.length > 0 ? (
-            posts.map((post) => <PostCard key={post.id} post={post} profile={true} />)
+            posts.map((post) => <PostCard key={post.id} post={post} />)
           ) : (
             <p className={styles.fetchingPosts}>Loading...</p>
           )}

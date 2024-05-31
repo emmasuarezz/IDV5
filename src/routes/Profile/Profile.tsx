@@ -64,7 +64,7 @@ function Profile() {
         </button>
       </section>
       <section className={`${utils.flex_wrap} ${utils.g2} ${utils.w_full} ${utils.p1} ${utils.jcenter}`}>
-        {activeTab === "posts" && userPosts.map((post) => <PostCard key={post.id} post={post} profile={true} />)}
+        {activeTab === "posts" && userPosts.map((post) => <PostCard key={post.id} post={post} />)}
       </section>
     </>
   );

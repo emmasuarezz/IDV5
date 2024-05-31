@@ -1,16 +1,8 @@
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import styles from "../../../styles/Components/postcard.module.scss";
 import { Post } from "../../../routes/Dashboard/Dashboard";
 
-function PostCard({ post, profile }: { post: Post; profile: boolean }) {
-  const [hover, setHover] = useState(false);
-  const handleHoverEnter = () => {
-    setHover(true);
-  };
-  const handleHoverLeave = () => {
-    setHover(false);
-  };
-
+function PostCard({ post }: { post: Post }) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const handlePlay = () => {
     const audio = audioRef.current;
@@ -29,11 +21,9 @@ function PostCard({ post, profile }: { post: Post; profile: boolean }) {
     <div className={`${styles.postCard}`}>
       <img
         onMouseEnter={() => {
-          handleHoverEnter();
           handlePlay();
         }}
         onMouseLeave={() => {
-          handleHoverLeave();
           handlePause();
         }}
         src={post.selected.cover}
