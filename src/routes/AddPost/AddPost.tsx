@@ -6,7 +6,6 @@ import { MappedTrack, MappedAlbum } from "../../hooks/UseSearch";
 import { useUserContext } from "../../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../firebase";
-import { set } from "firebase/database";
 
 function AddPost() {
   const { setSearch, searchResults, setIsTrack, isTrack, isLoading } = useSearch();
