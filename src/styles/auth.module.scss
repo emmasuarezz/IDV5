@@ -1,0 +1,258 @@
+@use "vars";
+
+.authContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: vars.$bg-color;
+  padding-inline: 15px;
+  font-family: vars.$ff-primary;
+  position: relative;
+
+  .logo {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 100px;
+    height: 100px;
+
+    font-size: 2rem;
+    font-weight: 500;
+    color: vars.$primary-color;
+    opacity: 0.35;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    &:hover {
+      opacity: 1;
+      transition: all 0.3s ease-in-out;
+    }
+  }
+}
+.connectContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  h2 {
+    max-width: fit-content;
+    width: 100%;
+    padding: 8px;
+    background-color: #d87cac;
+  }
+
+  p {
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: vars.$secondary-color;
+    margin-bottom: 20px;
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  button {
+    max-width: 200px;
+    width: 100%;
+    padding-block: 20px;
+    border: 2px solid vars.$secondary-color;
+    border-radius: 100px;
+    background-color: vars.$bg-form;
+    color: vars.$secondary-color;
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    &:hover {
+      background-color: vars.$primary-color;
+      border-color: vars.$primary-color;
+      color: vars.$bg-form;
+      transition: all 0.3s ease-in-out;
+    }
+  }
+}
+.authForm {
+  z-index: 1;
+  position: relative;
+  margin: 5px;
+  max-width: 500px;
+  width: 100%;
+  min-height: 500px;
+  border-radius: 10px;
+  border: 3px solid vars.$secondary-color;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+
+  &::before,
+  &::after {
+    border-radius: 10px;
+    z-index: -1;
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    animation: fade 6s infinite;
+  }
+
+  &::after {
+    background: radial-gradient(
+      circle,
+      rgba(155, 197, 61, 0.39659191313244047) 10%,
+      rgba(155, 197, 61, 1) 30%,
+      rgba(85, 197, 61, 1) 65%,
+      rgba(19, 21, 21, 1) 68%
+    );
+  }
+
+  h2 {
+    margin-top: 20px;
+    font-size: 1.5rem;
+    color: vars.$secondary-color;
+    font-weight: 400;
+    font-style: italic;
+    margin-bottom: 20px;
+    width: 100%;
+    text-align: center;
+
+    span {
+      color: #d87cac;
+      font-weight: 700;
+    }
+  }
+
+  .formGroup {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 40px;
+    width: 100%;
+    min-height: 260px;
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-bottom: 2px solid vars.$secondary-color;
+      background-color: #00000055;
+      color: vars.$secondary-color;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+      &:focus {
+        outline: none;
+        border-color: vars.$primary-color;
+        color: vars.$primary-color;
+        transition: all 0.3s ease;
+      }
+
+      & + .errorMessage {
+        color: #ff0033;
+        font-size: 1rem;
+        font-weight: 300;
+        margin-top: -25px;
+        width: 100%;
+        text-align: center;
+      }
+    }
+
+    .inputError {
+      border-color: #ff0033;
+      color: #ff0033;
+      transition: all 0.3s ease;
+    }
+
+    button {
+      margin-bottom: 20px;
+      max-width: 130px;
+      width: 100%;
+      align-self: center;
+      padding-block: 20px;
+      border: 2px solid vars.$secondary-color;
+      border-radius: 100px;
+      background-color: vars.$bg-form;
+      color: vars.$secondary-color;
+      font-size: 1.2rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      &:hover {
+        background-color: vars.$primary-color;
+        border-color: vars.$primary-color;
+        color: vars.$bg-form;
+        transition: all 0.3s ease-in-out;
+      }
+    }
+  }
+}
+.title {
+  max-width: 500px;
+  width: 100%;
+  font-size: 1.4rem;
+  color: vars.$secondary-color;
+  font-weight: 300;
+
+  span {
+    color: vars.$primary-color;
+    font-size: 1.1rem;
+    opacity: 0.5;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    &:hover {
+      opacity: 1;
+      transition: all 0.3s ease-in-out;
+    }
+  }
+}
+.forgotPW {
+  max-width: 600px;
+  width: 100%;
+  font-size: 0.95rem;
+  color: vars.$secondary-color;
+  font-weight: 200;
+  font-style: italic;
+  text-align: center;
+  opacity: 0.7;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  &:hover {
+    opacity: 1;
+    color: vars.$primary-color;
+    transition: all 0.3s ease-in-out;
+  }
+}
+.spinner {
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(255, 255, 255, 0.3);
+  border-top: 5px solid rgba(255, 255, 255, 1);
+  border-radius: 100%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

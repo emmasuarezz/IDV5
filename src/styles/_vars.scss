@@ -1,0 +1,25 @@
+@import url(https://fonts.googleapis.com/css2?family=K2D:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap);
+@import url(https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&display=swap);
+$dark-gray: #000000;
+$green: #90d50f;
+
+//colors for the auth page, I created it in a different project
+$bg-color: #131515;
+$bg-form: #272626;
+$primary-color: #9bc53d;
+$secondary-color: #ffe5d4;
+$tertiary-color: #5a7d7c;
+/////////////////////////////////////////////////////////////////
+
+$ff-primary: "K2D", sans-serif;
+$ff-archivo: "Archivo", sans-serif;
+
+$colors: (
+  "green": #acc1aa,
+  "orange": #ba5622,
+  "red": #701f1f,
+  "gray": #2d2d2d,
+  "dark-gray": #1f1e1e,
+  "darker-gray": #141313,
+  "alpha-green": #acc1aaab,
+);

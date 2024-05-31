@@ -1,0 +1,48 @@
+@use "../vars";
+@use "sass:map";
+
+$bg-image: url("../../assets/bg-profile.png");
+
+.picture_picker_wrapper {
+  margin-top: 1rem;
+  max-width: 500px;
+  padding: 0.5rem;
+  background-color: map-get(vars.$colors, "gray");
+  border-radius: 10px;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.5s ease-in-out;
+  &.visible {
+    transition: all 0.5s ease-in-out;
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.photo_grid {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  padding-inline: 1rem;
+  padding-block: 0.5rem;
+  gap: 1.5rem 0;
+
+  .photo_container {
+    border-radius: 10px;
+    overflow: hidden;
+    max-width: 125px;
+
+    img {
+      transition: scale 0.3s ease, opacity 0.5s ease;
+
+      &:hover {
+        cursor: pointer;
+        opacity: 0.7;
+        scale: 1.1;
+        transition: scale 0.3s ease, opacity 0.5s ease;
+      }
+    }
+  }
+}

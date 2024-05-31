@@ -1,0 +1,91 @@
+@use "../vars";
+
+.previewCard {
+  width: 100%;
+  max-width: 200px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 5px;
+  background-color: vars.$dark-gray;
+  padding: 0.5rem;
+  flex-shrink: 0;
+  scroll-snap-align: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  img {
+    width: 100%;
+    max-width: 200px;
+    height: 100%;
+    border-radius: 5px;
+    margin-block: 0.5rem;
+    filter: blur(1.5px);
+    transition: all 0.3s ease;
+
+    &:hover {
+      filter: blur(0px);
+      transition: all 0.5s ease;
+    }
+  }
+
+  .previewInfo {
+    font-size: 1rem;
+    color: whitesmoke;
+    font-weight: 300;
+    font-style: italic;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+
+    h2,
+    p {
+      max-height: 24px;
+      display: inline-block;
+      white-space: nowrap;
+      transition: all 0.3s ease;
+    }
+    .marqueeAnimation {
+      animation-name: marquee;
+      animation-duration: 8s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+      animation-direction: normal;
+    }
+  }
+}
+
+.previewCard:focus {
+  background-color: whitesmoke;
+  transition: all 0.3s ease;
+
+  img {
+    filter: blur(0px) invert(0.75) saturate(0) brightness(1.5);
+    transition: all 0.3s ease;
+  }
+  .previewInfo {
+    h2,
+    p {
+      color: vars.$dark-gray;
+      transition: all 0.3s ease;
+    }
+  }
+}
+
+@keyframes marquee {
+  0%,
+  20% {
+    transform: translateX(0px);
+  }
+
+  75%,
+  80% {
+    transform: translateX(calc(184px - 100%));
+  }
+
+  100% {
+    transform: translateX(0px);
+  }
+}

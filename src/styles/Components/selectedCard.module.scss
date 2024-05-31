@@ -1,0 +1,32 @@
+@use "../vars";
+
+.selectedCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0.5rem;
+  transition: all 0.3s ease-in-out;
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    & > * {
+      cursor: pointer !important;
+    }
+    h1 {
+      color: vars.$green !important;
+    }
+    p {
+      color: white !important;
+    }
+  }
+
+  &:hover {
+    cursor: pointer;
+    padding: 0.65rem;
+    background-color: #a4e52b4e;
+    box-shadow: #a4e52b4e 0px 0px 12px 8px;
+    transition: all 0.3s ease-in-out;
+  }
+}

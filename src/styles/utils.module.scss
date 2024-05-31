@@ -1,0 +1,109 @@
+@use "vars";
+
+.flex {
+  display: flex;
+  &_wrap {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+.flexCol {
+  display: flex;
+  flex-direction: column;
+}
+.flexQuery {
+  display: flex;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+.jcenter {
+  justify-content: center;
+}
+.icenter {
+  align-items: center;
+}
+.g1 {
+  gap: 0.25rem;
+}
+.g2 {
+  gap: 0.5rem;
+}
+.p1 {
+  padding: 1rem;
+}
+.p0 {
+  padding: 0.5rem;
+}
+.mt1 {
+  margin-top: 0.5rem;
+}
+.mb1 {
+  margin-bottom: 0.5rem;
+}
+.lineh1 {
+  line-height: 1.15;
+}
+.accent {
+  color: vars.$green;
+}
+.hScreen {
+  min-height: 100vh;
+  overflow: hidden;
+}
+.self_end {
+  align-self: flex-end;
+}
+.m {
+  &_block_1 {
+    margin-block: 0.5rem;
+  }
+  &l_auto {
+    margin-left: auto;
+  }
+}
+.w_full {
+  width: 100%;
+}
+
+.cta {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: vars.$secondary-color;
+  background-color: vars.$bg-form;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s;
+  &:hover {
+    color: vars.$bg-color;
+    background-color: vars.$primary-color;
+    font-weight: 600;
+    transition: all 0.3s;
+  }
+  &:active {
+    color: vars.$secondary-color;
+    background-color: #0f0f0f;
+    font-weight: 600;
+    transition: all 0.2s ease-out;
+  }
+  &:disabled {
+    background-color: vars.$bg-color;
+    color: vars.$secondary-color;
+    cursor: not-allowed;
+    &:hover {
+      font-weight: 500;
+    }
+  }
+
+  &_active {
+    color: vars.$bg-color;
+    background-color: vars.$primary-color;
+    font-weight: 600;
+    &:hover {
+      background-color: vars.$primary-color;
+      font-weight: 600;
+    }
+  }
+}
