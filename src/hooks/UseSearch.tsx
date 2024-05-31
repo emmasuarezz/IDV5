@@ -10,6 +10,7 @@ export type MappedTrack = {
   artist: string;
   cover: string;
   preview: string | undefined;
+  spotify_url: string;
 };
 export type MappedAlbum = {
   uid: string;
@@ -29,6 +30,7 @@ export const mapTracks = (data: TrackObject[]): MappedTrack[] => {
       artist: track.artists[0].name,
       cover: track.album.images[1].url ?? track.album.images[0].url,
       preview: track.preview_url,
+      spotify_url: track.external_urls.spotify,
     };
   });
 };
