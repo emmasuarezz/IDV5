@@ -6,9 +6,11 @@ import { MappedTrack, MappedAlbum } from "../../hooks/UseSearch";
 import { useUserContext } from "../../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../firebase";
+import { set } from "firebase/database";
 
 function AddPost() {
   const { setSearch, searchResults, setIsTrack, isTrack, isLoading } = useSearch();
+  const [isPosting, setIsPosting] = useState(false);
   const [selected, setSelected] = useState<MappedTrack | MappedAlbum | undefined>(undefined);
   const [isTrackSelected, setIsTrackSelected] = useState(false);
   const [title, setTitle] = useState("");
@@ -16,6 +18,7 @@ function AddPost() {
   const { user } = useUserContext();
   const navigate = useNavigate();
   const submitPost = async () => {
+    setIsPosting(true);
     try {
       const token = await auth.currentUser?.getIdToken();
       const result = await fetch(`${import.meta.env.VITE_SERVER}/fb/createPost/${user?.uid}`, {
@@ -104,7 +107,7 @@ function AddPost() {
           <h2>Add a message</h2>
           <textarea value={message} onChange={(e) => setMessage(e.target.value)} maxLength={192} />
         </div>
-        <button onClick={() => submitPost()}>add post</button>
+        <button onClick={() => submitPost()}>{isPosting ? "posting" : "add post"}</button>
       </section>
     </>
   );
