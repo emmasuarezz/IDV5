@@ -6,11 +6,13 @@ import { UserContextType, useUserContext } from "../../../contexts/UserContext";
 import styles from "../../../styles/profileSetup.module.scss";
 import utils from "../../../styles/utils.module.scss";
 import Banners from "../../../assets/banners/Banners";
+
 function PreviewProfile({ userPreview }: { userPreview: UserPreviewType }) {
   const [bannerUrl, setBannerUrl] = useState<string>(Banners[0]);
   const [username, setUsername] = useState<string>("@username");
   const [errorUsername, setErrorUsername] = useState("");
   const [validUsername, setValidUsername] = useState<boolean>(false);
+  const [completed, setCompleted] = useState<boolean>(false);
   const { setUser } = useUserContext();
   const navigate = useNavigate();
   //logic to handle the upload of the banner and avatar
@@ -54,7 +56,7 @@ function PreviewProfile({ userPreview }: { userPreview: UserPreviewType }) {
     }
   };
   const handleFinishSetup = async () => {
-    console.log("All done!");
+    setCompleted(true);
     const avatarUrl = userPreview.avatar;
     const token = await auth.currentUser?.getIdToken();
     const finalUsername = username.charAt(0) === "@" ? username.slice(1) : username;
@@ -124,8 +126,8 @@ function PreviewProfile({ userPreview }: { userPreview: UserPreviewType }) {
         </section>
       </section>
       <div className={`${utils.w_full} ${utils.flex} ${utils.jcenter}`}>
-        <button onClick={handleFinishSetup} className={styles.cta}>
-          all done
+        <button onClick={handleFinishSetup} className={styles.cta} disabled={!validUsername}>
+          {completed ? "finishing..." : "all done"}
         </button>
       </div>
     </>

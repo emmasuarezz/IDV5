@@ -1,4 +1,4 @@
-import { PostCard, SelectedCard } from "./Components";
+import { PostCard, SelectedCard, WelcomeCard } from "./Components";
 import styles from "../../styles/dashboard.module.scss";
 import { useUserContext } from "../../contexts/UserContext";
 import { useEffect, useState } from "react";
@@ -8,6 +8,7 @@ import firebase from "firebase/compat/app";
 
 export type Post = {
   id: string;
+  uid: string;
   displayName: string;
   userAvatar: string;
   title: string;
@@ -24,7 +25,7 @@ export type Post = {
 };
 
 function Dashboard() {
-  const { selected } = useUserContext();
+  const { selected, showWelcome, setShowWelcome } = useUserContext();
   const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
@@ -45,6 +46,7 @@ function Dashboard() {
 
   return (
     <main className={styles.main}>
+      {showWelcome && <WelcomeCard setShowWelcome={setShowWelcome} />}
       <section className={styles.postsSection}>
         <h1>latest</h1>
         <p>check out what people have been listening</p>
@@ -56,12 +58,26 @@ function Dashboard() {
           )}
         </section>
       </section>
+
       <section className={styles.selectionSection}>
         <h1>Tenzo's Selection</h1>
         <p>updated every weekend with the sickest tunes just for you!</p>
         <div className={styles.selectedPreview}>
           {selected && selected.map((track) => <SelectedCard key={track.uid} track={track} />)}
         </div>
+      </section>
+
+      <section className={styles.soundcloudSection}>
+        <div>
+          <h2>Do you like techno?</h2>
+          <p>Check out my latest mix</p>
+        </div>
+        <iframe
+          width="100%"
+          height="200"
+          allow="autoplay"
+          src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1828818687&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=false"
+        ></iframe>
       </section>
     </main>
   );

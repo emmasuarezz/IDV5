@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../../hooks/UseAuth";
-import { useNavigate } from "react-router-dom";
 import styles from "../../styles/profileSetup.module.scss";
 import utils from "../../styles/utils.module.scss";
-import { auth } from "../../firebase";
 import { Avatars } from "../../assets/avatars/Avatars";
 import { PreviewProfile, ProfileSection } from "./components";
 
@@ -23,7 +21,7 @@ const userPreviewInitial = {
 };
 
 function ProfileSetup() {
-  const { setUser, user } = useAuth();
+  const { user } = useAuth();
   // State for the user info
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -33,7 +31,6 @@ function ProfileSetup() {
   // State for showing the different portions of the setup
   const [step, setStep] = useState(0);
   const [userPreview, setUserPreview] = useState(userPreviewInitial);
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (user) {
@@ -51,23 +48,12 @@ function ProfileSetup() {
     if (avatar) profileData.avatar = avatar;
     setUserPreview(profileData as UserPreviewType);
   };
-  const handleSignOut = async () => {
-    try {
-      await auth.signOut();
-      setUser(undefined);
-      navigate("/");
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
   return (
     <main className={styles.container}>
       <div>
         <h1>Profile Setup</h1>
         <p>We are happy that you are here!</p>
-        <button className={styles.signOutButton} onClick={() => handleSignOut()}>
-          sign out?
-        </button>
       </div>
       <hr />
       {/* If the user has not completed their profile we let them do so.

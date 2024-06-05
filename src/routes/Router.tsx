@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { Dashboard, Profile, AddPost, Auth, ProfileSetup } from ".";
+import { Dashboard, Profile, AddPost, Auth, ProfileSetup, UserProfile, Post } from ".";
 import Layout from "../Layout";
 
 const AppRouter = () => (
@@ -31,6 +31,22 @@ const AppRouter = () => (
           </Layout>
         }
       />
+      <Route
+        path="/userProfile/:userUID"
+        element={
+          <Layout>
+            <UserProfile />
+          </Layout>
+        }
+      />
+      <Route
+        path="/post/:postID"
+        element={
+          <Layout>
+            <Post />
+          </Layout>
+        }
+      ></Route>
     </Routes>
   </Router>
 );

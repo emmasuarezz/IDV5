@@ -1,9 +1,12 @@
 import { useRef } from "react";
 import styles from "../../../styles/Components/postcard.module.scss";
 import { Post } from "../../../routes/Dashboard/Dashboard";
+import { useNavigate } from "react-router-dom";
+import { auth } from "../../../firebase";
 
 function PostCard({ post }: { post: Post }) {
   const audioRef = useRef<HTMLAudioElement>(null);
+  const navigate = useNavigate();
   const handlePlay = () => {
     const audio = audioRef.current;
     if (audio) {
@@ -26,10 +29,22 @@ function PostCard({ post }: { post: Post }) {
         onMouseLeave={() => {
           handlePause();
         }}
+        onClick={() => navigate(`/post/${post.id}`)}
         src={post.selected.cover}
         alt=""
       />
-      <img className={styles.avatarUser} src={post.userAvatar ? post.userAvatar : ""} alt="" />
+      <img
+        onClick={() => {
+          if (auth.currentUser?.uid === post.uid) {
+            navigate("/profile");
+          } else {
+            navigate(`/userProfile/${post.uid}`);
+          }
+        }}
+        className={styles.avatarUser}
+        src={post.userAvatar ? post.userAvatar : ""}
+        alt=""
+      />
 
       <audio ref={audioRef} src={post.selected.preview} style={{ display: "hidden" }}></audio>
     </div>

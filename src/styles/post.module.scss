@@ -1,0 +1,77 @@
+@use "./vars";
+
+.postContainer {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.postInfo {
+  flex: 0 0 auto;
+  display: flex;
+  padding: 1rem;
+  padding-inline: 1.5rem;
+  border-radius: 5px;
+  background-color: #000;
+  width: fit-content;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-left: 0.75rem;
+    h1 {
+      font-size: 2rem;
+      color: vars.$green;
+    }
+    h2 {
+      font-size: 1.5rem;
+      font-style: italic;
+      color: vars.$secondary-color;
+      font-weight: 500;
+    }
+  }
+
+  img {
+    flex-shrink: 0;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    animation: spin 5s linear infinite;
+    animation-play-state: paused;
+    &:hover {
+      animation-play-state: running;
+    }
+  }
+}
+
+.postContent {
+  flex: 1 1 300px; // This means "grow and shrink as needed, start at 300px width"
+  min-width: 200px;
+  padding: 1rem;
+  padding-inline: 1.5rem;
+  border-radius: 5px;
+  background-color: #000;
+  font-size: 1.25rem;
+  font-weight: 500;
+  font-style: italic;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  h2 {
+    color: vars.$green;
+  }
+  p {
+    color: vars.$secondary-color;
+  }
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

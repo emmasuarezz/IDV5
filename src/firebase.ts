@@ -16,10 +16,10 @@ const firebaseConfig = {
 export type Post = {
   title: string;
   message: string;
-  track: {
+  selected: {
     name: string;
     album: string;
-    image: string;
+    cover: string;
     artist: string;
     id: string;
     preview: string;

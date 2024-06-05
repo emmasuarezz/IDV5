@@ -5,6 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { auth } from "./firebase";
 import styles from "./styles/layout.module.scss";
 import utils from "./styles/utils.module.scss";
+import github from "./assets/githubIcon.png";
+import linkedin from "./assets/linkedinIcon.png";
 
 type LayoutProps = {
   children: ReactNode;
@@ -15,6 +17,7 @@ const Layout = ({ children }: LayoutProps) => {
   const { setUser } = useUserContext();
   const navigate = useNavigate();
   const [menuClicked, setMenuClicked] = useState(false);
+
   //change the active link in the sidebar
   const changeActiveLink = (e: React.MouseEvent<HTMLLIElement>, where: string) => {
     const links = document.querySelectorAll("nav ul li");
@@ -31,7 +34,6 @@ const Layout = ({ children }: LayoutProps) => {
     (e.target as HTMLElement).classList.remove(styles.inactive);
     (e.target as HTMLElement).classList.add(styles.active);
   };
-
   const handleSignOut = async () => {
     try {
       await auth.signOut();
@@ -58,6 +60,7 @@ const Layout = ({ children }: LayoutProps) => {
           {menuClicked && (
             <div className={styles.hamburger_menu}>
               <p onClick={() => handleSignOut()}>Sign out?</p>
+              <p>Notifications</p>
             </div>
           )}
           <nav>
@@ -85,6 +88,22 @@ const Layout = ({ children }: LayoutProps) => {
         </section>
         <div className={styles.main}>{children}</div>
       </div>
+      <footer>
+        <h3>
+          Made with love by{" "}
+          <a href="https://tenzo.tech" target="_blank">
+            Tenzo
+          </a>{" "}
+        </h3>
+        <div className={styles.socials}>
+          <img onClick={() => window.open("https://github.com/emmasuarezz", "_blank")} src={github} alt="" />{" "}
+          <img
+            onClick={() => window.open("https://www.linkedin.com/in/emmanuelsuarezt/", "_blank")}
+            src={linkedin}
+            alt=""
+          />
+        </div>
+      </footer>
     </>
   );
 };
