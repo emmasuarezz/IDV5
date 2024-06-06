@@ -107,3 +107,14 @@
     }
   }
 }
+
+.danger {
+  background-color: vars.$red;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  &:hover {
+    background-color: vars.$dark-red;
+    transition: all 0.3s ease;
+  }
+}

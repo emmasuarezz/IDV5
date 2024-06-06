@@ -67,6 +67,17 @@
     color: vars.$secondary-color;
   }
 }
+.deletePost {
+  max-width: 150px;
+  width: 100%;
+  margin-top: auto;
+  margin-left: auto;
+  opacity: 0.3;
+
+  &:hover {
+    opacity: 1;
+  }
+}
 @keyframes spin {
   from {
     transform: rotate(0deg);

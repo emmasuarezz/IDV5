@@ -18,6 +18,7 @@ export type MappedAlbum = {
   album: string;
   artist: string;
   cover: string;
+  spotify_url: string;
 };
 
 export const mapTracks = (data: TrackObject[]): MappedTrack[] => {
@@ -42,6 +43,7 @@ const mapAlbums = (data: AlbumObject[]): MappedAlbum[] => {
       album: album.name,
       artist: album.artists[0].name,
       cover: album.images[1].url ?? album.images[0].url,
+      spotify_url: album.external_urls.spotify,
     };
   });
 };
