@@ -9,10 +9,12 @@ import { auth } from "../../firebase";
 function Profile() {
   const [activeTab, setActiveTab] = useState("posts");
   const [userPosts, setUserPosts] = useState<Post[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const { user } = useAuth();
 
   useEffect(() => {
     const fetchPosts = async () => {
+      setIsLoading(true);
       try {
         const token = await auth.currentUser?.getIdToken();
         const response = await fetch(`${import.meta.env.VITE_SERVER}/fb/getPosts/${user?.uid}`, {
@@ -23,6 +25,7 @@ function Profile() {
         });
         const data = await response.json();
         setUserPosts(data);
+        setIsLoading(false);
       } catch (error) {
         console.error(error);
       }
@@ -31,10 +34,19 @@ function Profile() {
     fetchPosts();
   }, [user]);
 
+  if (isLoading) {
+    return (
+      <section className={utils.loadingState}>
+        <h1>Loading profile...</h1>
+        <h2>It won't take long</h2>
+      </section>
+    );
+  }
+
   return (
     <>
       <section className={styles.profile_container} style={{ backgroundImage: `url(${user?.banner})` }}>
-        <section className={`${utils.flex} ${utils.g2}`}>
+        <section className={`${utils.flex} ${utils.g2} ${utils.icenter}`}>
           <div className={styles.img_wrapper}>
             <img src={user?.avatar} alt="" />
           </div>

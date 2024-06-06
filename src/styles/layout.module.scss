@@ -195,7 +195,8 @@ footer {
   border-radius: 5px;
   font-size: 0.75rem;
   user-select: none;
-
+  opacity: 0.45;
+  transition: all 0.3s ease;
   h3 {
     a {
       color: vars.$green;
@@ -214,6 +215,11 @@ footer {
         filter: invert(75%) sepia(57%) saturate(2170%) hue-rotate(33deg) brightness(102%) contrast(88%);
       }
     }
+  }
+
+  &:hover {
+    opacity: 1;
+    transition: all 0.3s ease;
   }
 }
 

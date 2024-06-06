@@ -12,9 +12,11 @@ function UserProfile() {
   const [userPosts, setUserPosts] = useState<Post[]>([]);
   const { userUID } = useParams();
   const [user, setUser] = useState<UserContextType>(undefined);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
+      setIsLoading(true);
       try {
         const token = await auth.currentUser?.getIdToken();
         const response = await fetch(`${import.meta.env.VITE_SERVER}/fb/getUser/${userUID}`, {
@@ -40,6 +42,7 @@ function UserProfile() {
         });
         const data = await response.json();
         setUserPosts(data);
+        setIsLoading(false);
       } catch (error) {
         console.error(error);
       }
@@ -48,6 +51,15 @@ function UserProfile() {
     fetchUser();
     fetchPosts();
   }, [userUID]);
+
+  if (isLoading) {
+    return (
+      <section className={utils.loadingState}>
+        <h1>Loading profile...</h1>
+        <h2>It won't take long</h2>
+      </section>
+    );
+  }
 
   return (
     <>

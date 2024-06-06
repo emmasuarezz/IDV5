@@ -118,3 +118,29 @@
     transition: all 0.3s ease;
   }
 }
+
+.loadingState {
+  margin: auto;
+  margin-top: 1rem;
+  background-color: vars.$bg-form;
+  padding: 1rem;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.45rem;
+  flex-direction: column;
+  h1 {
+    color: vars.$green;
+    font-weight: 600;
+    font-size: 1.5rem;
+  }
+  h2 {
+    color: vars.$secondary-color;
+    font-size: 1.2rem;
+    font-weight: 400;
+    font-style: italic;
+  }
+}

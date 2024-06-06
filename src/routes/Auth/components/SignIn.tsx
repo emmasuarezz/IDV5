@@ -34,7 +34,6 @@ function SignInForm({
   //////////////////////////////////////////
   const signInFn = async ({ auth, email, password }: { auth: Auth; email: string; password: string }) => {
     setLoading(true);
-    console.log("signing in", invalidCredentials); //false, i hope
     const res = await signInWithEmailAndPassword(auth, email, password);
     const user = res.user;
     return { user };
@@ -43,9 +42,15 @@ function SignInForm({
     onSuccess: async (data) => {
       setInvalidCredentials(false);
       const user = data.user;
+      const token = await auth.currentUser?.getIdToken();
       if (user) {
         const uid = user.uid;
-        const userResponse = await fetch(import.meta.env.VITE_SERVER + "/fb/getUser/" + uid);
+        const userResponse = await fetch(import.meta.env.VITE_SERVER + "/fb/getUser/" + uid, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
         const userData = await userResponse.json();
         setUser(userData as UserContextType);
         navigate("/dashboard");

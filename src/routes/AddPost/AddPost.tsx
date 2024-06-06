@@ -1,4 +1,5 @@
 import styles from "../../styles/addPost.module.scss";
+import utils from "../../styles/utils.module.scss";
 import { useState } from "react";
 import useSearch from "../../hooks/UseSearch";
 import { PreviewCard, Searchbar } from "./components";
@@ -77,8 +78,11 @@ function AddPost() {
         <Searchbar setSearch={setSearch} isTrack={isTrack} />
       </section>
 
-      {searchResults.length === 0 ? null : isLoading ? (
-        <p className={styles.fetching}>searching!</p>
+      {isLoading ? (
+        <section className={utils.loadingState}>
+          <h1>Searching for {isTrack ? "track" : "album"}...</h1>
+          <h2>It won't take long</h2>
+        </section>
       ) : (
         <section className={styles.preview}>
           <h1 className={styles.title}>Results</h1>

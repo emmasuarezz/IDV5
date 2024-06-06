@@ -1,26 +1,28 @@
 import styles from "../../../styles/Components/deleteModal.module.scss";
 import utils from "../../../styles/utils.module.scss";
 import { auth } from "../../../firebase";
-
-const handleDelete = async (id: string) => {
-  try {
-    const token = await auth.currentUser?.getIdToken();
-    const response = await fetch(`${import.meta.env.VITE_SERVER}/fb/deletePost/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    const data = await response.json();
-    console.log(data);
-  } catch {
-    console.error("Error deleting post");
-  }
-};
+import { useNavigate } from "react-router-dom";
 
 export default function DeleteModal({ id, setDeleteModal }: { id: string; setDeleteModal: (value: boolean) => void }) {
-  console.log(id);
+  const navigate = useNavigate();
+  const handleDelete = async (id: string) => {
+    try {
+      const token = await auth.currentUser?.getIdToken();
+      const response = await fetch(`${import.meta.env.VITE_SERVER}/fb/deletePost/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.ok) {
+        console.log("Post deleted");
+        navigate("/dashboard");
+      }
+    } catch {
+      console.error("Error deleting post");
+    }
+  };
   return (
     <div className={styles.modal}>
       <p onClick={() => setDeleteModal(false)}>nevermind, go back</p>

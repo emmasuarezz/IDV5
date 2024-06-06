@@ -52,7 +52,7 @@ const Layout = ({ children }: LayoutProps) => {
 
   return (
     <>
-      <div className={`${utils.flexCol} ${utils.hScreen} ${utils.p1}`}>
+      <div className={`${utils.flexCol}  ${utils.p1}`}>
         <section className={styles.sidebar}>
           <div onClick={() => setMenuClicked(!menuClicked)} className={styles.hamburger}>
             {menuClicked ? "X" : "|||"}
