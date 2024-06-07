@@ -4,9 +4,11 @@ import styles from "../../../styles/addPost.module.scss";
 function Searchbar({
   setSearch,
   isTrack,
+  isUser,
 }: {
   setSearch: (search: string) => void;
-  isTrack: boolean;
+  isTrack?: boolean;
+  isUser?: boolean;
 }) {
   const [inputValue, setInputValue] = useState<string>("");
   return (
@@ -20,7 +22,7 @@ function Searchbar({
           }
         }}
         type="text"
-        placeholder={`Search ${isTrack ? "track" : "album"}`}
+        placeholder={`Search ${isUser ? "user" : isTrack ? "track" : "album"}`}
       />
       <button
         onClick={() => {

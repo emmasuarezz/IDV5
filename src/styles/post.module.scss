@@ -31,6 +31,16 @@
       color: vars.$secondary-color;
       font-weight: 500;
     }
+    a {
+      opacity: 0.75;
+      transition: opacity 0.3s ease;
+
+      &:hover {
+        text-decoration: underline;
+        opacity: 1;
+        transition: opacity 0.3s ease;
+      }
+    }
   }
 
   img {
@@ -80,6 +90,21 @@
   }
   p {
     color: vars.$secondary-color;
+  }
+
+  .interactionSection {
+    display: flex;
+    align-items: center;
+    h3 {
+      font-size: 1rem;
+      color: white;
+      font-weight: 400;
+    }
+
+    .heartIcon {
+      width: 30px;
+      cursor: pointer;
+    }
   }
 
   .displayName {

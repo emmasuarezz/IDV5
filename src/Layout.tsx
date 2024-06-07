@@ -52,7 +52,7 @@ const Layout = ({ children }: LayoutProps) => {
 
   return (
     <>
-      <div className={`${utils.flexCol}  ${utils.p1}`}>
+      <div className={`${utils.flexCol}  ${utils.p1} ${utils.hScreen}`}>
         <section className={styles.sidebar}>
           <div onClick={() => setMenuClicked(!menuClicked)} className={styles.hamburger}>
             {menuClicked ? "X" : "|||"}
@@ -72,7 +72,7 @@ const Layout = ({ children }: LayoutProps) => {
               </Link>
               <Link to={"/addPost"}>
                 <li className={styles.inactive} data-name="post" onClick={(e) => changeActiveLink(e, "post")}>
-                  Post
+                  Search
                 </li>
               </Link>
             </ul>
@@ -87,23 +87,23 @@ const Layout = ({ children }: LayoutProps) => {
           </div>
         </section>
         <div className={styles.main}>{children}</div>
+        <footer className={utils.mt_auto}>
+          <h3>
+            Made with love by{" "}
+            <a href="https://tenzo.tech" target="_blank">
+              Tenzo
+            </a>{" "}
+          </h3>
+          <div className={styles.socials}>
+            <img onClick={() => window.open("https://github.com/emmasuarezz", "_blank")} src={github} alt="" />{" "}
+            <img
+              onClick={() => window.open("https://www.linkedin.com/in/emmanuelsuarezt/", "_blank")}
+              src={linkedin}
+              alt=""
+            />
+          </div>
+        </footer>
       </div>
-      <footer>
-        <h3>
-          Made with love by{" "}
-          <a href="https://tenzo.tech" target="_blank">
-            Tenzo
-          </a>{" "}
-        </h3>
-        <div className={styles.socials}>
-          <img onClick={() => window.open("https://github.com/emmasuarezz", "_blank")} src={github} alt="" />{" "}
-          <img
-            onClick={() => window.open("https://www.linkedin.com/in/emmanuelsuarezt/", "_blank")}
-            src={linkedin}
-            alt=""
-          />
-        </div>
-      </footer>
     </>
   );
 };

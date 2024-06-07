@@ -35,8 +35,13 @@
 .p0 {
   padding: 0.5rem;
 }
-.mt1 {
-  margin-top: 0.5rem;
+.mt {
+  &1 {
+    margin-top: 0.5rem;
+  }
+  &_auto {
+    margin-top: auto;
+  }
 }
 .mb1 {
   margin-bottom: 0.5rem;
@@ -60,6 +65,9 @@
   }
   &l_auto {
     margin-left: auto;
+  }
+  &l_1 {
+    margin-left: 0.5rem;
   }
 }
 .w_full {
@@ -143,4 +151,8 @@
     font-weight: 400;
     font-style: italic;
   }
+}
+
+.hidden {
+  display: none;
 }

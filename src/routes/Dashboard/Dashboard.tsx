@@ -14,6 +14,10 @@ export type Post = {
   userAvatar: string;
   title: string;
   message: string;
+  likes: {
+    amount: number;
+    users: string[];
+  };
   selected: {
     uid: string;
     name: string;
@@ -21,9 +25,14 @@ export type Post = {
     artist: string;
     cover: string;
     preview: string | undefined;
+    spotify_url: string;
   };
   timestamp: firebase.firestore.Timestamp;
 };
+
+const bpitchLink = "https://www.bpitch.de/en/release/various-artists-we-are-not-alone-pt-7/";
+const soundcloudiFrame =
+  "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1828818687&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=false";
 
 function Dashboard() {
   const { selected, showWelcome, setShowWelcome } = useUserContext();
@@ -65,6 +74,14 @@ function Dashboard() {
       <section className={styles.selectionSection}>
         <h1>Tenzo's Selection</h1>
         <p>updated every weekend with the sickest tunes just for you!</p>
+        <p>
+          Happy release day for{" "}
+          <a href={bpitchLink} target="_blank">
+            BPitch
+          </a>
+          !
+        </p>
+        <p>We Are Not Alone Pt. 7 is out now!</p>
         <div className={styles.selectedPreview}>
           {selected && selected.map((track) => <SelectedCard key={track.uid} track={track} />)}
         </div>
@@ -75,12 +92,7 @@ function Dashboard() {
           <h2>Do you like techno?</h2>
           <p>Check out my latest mix</p>
         </div>
-        <iframe
-          width="100%"
-          height="200"
-          allow="autoplay"
-          src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1828818687&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=false"
-        ></iframe>
+        <iframe width="100%" height="200" allow="autoplay" src={soundcloudiFrame}></iframe>
       </section>
     </main>
   );
