@@ -7,26 +7,41 @@ import { Post } from "../Dashboard/Dashboard";
 import { auth } from "../../firebase";
 import { UserContextType } from "../../contexts/UserContext";
 
+type Relationship = "friends" | "requestSent" | "notFriends" | undefined;
+
 function UserProfile() {
   const [activeTab, setActiveTab] = useState("posts");
   const [userPosts, setUserPosts] = useState<Post[]>([]);
   const { userUID } = useParams();
   const [user, setUser] = useState<UserContextType>(undefined);
   const [isLoading, setIsLoading] = useState(false);
+  const [isFriend, setIsFriend] = useState<Relationship>(undefined);
 
   useEffect(() => {
     const fetchUser = async () => {
       setIsLoading(true);
       try {
         const token = await auth.currentUser?.getIdToken();
-        const response = await fetch(`${import.meta.env.VITE_SERVER}/fb/getUser/${userUID}`, {
+        const userResponse = await fetch(`${import.meta.env.VITE_SERVER}/fb/getUser/${userUID}`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
         });
-        const data = await response.json();
-        setUser(data);
+        const relationResponse = await fetch(
+          `${import.meta.env.VITE_SERVER}/fb/getRelation/${auth.currentUser?.uid}/${userUID}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        const userData = await userResponse.json();
+        const relationData = await relationResponse.text();
+        setIsFriend(relationData as Relationship);
+        setUser(userData);
       } catch (error) {
         console.error(error);
       }
@@ -61,6 +76,22 @@ function UserProfile() {
     );
   }
 
+  async function handleAddFriend() {
+    try {
+      const token = await auth.currentUser?.getIdToken();
+      await fetch(`${import.meta.env.VITE_SERVER}/fb/addFriend/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ userAdding: auth.currentUser?.uid, userRecieving: userUID }),
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <>
       <section className={styles.profile_container} style={{ backgroundImage: `url(${user?.banner})` }}>
@@ -86,10 +117,14 @@ function UserProfile() {
         >
           posts
         </button>
-        <button className={`${utils.cta} ${activeTab == "friends" ? utils.cta_active : ""}`}>add friend</button>
+        {isFriend && (
+          <button className={`${utils.cta}`} onClick={() => handleAddFriend()} disabled={isFriend !== "notFriends"}>
+            {isFriend === "notFriends" ? "add friend" : isFriend === "requestSent" ? "request sent" : "friends"}
+          </button>
+        )}
       </section>
       <section className={`${utils.flex_wrap} ${utils.g2} ${utils.w_full} ${utils.p1} ${utils.jcenter}`}>
-        {activeTab === "posts" && userPosts.map((post) => <PostCard key={post.uid} post={post} />)}
+        {activeTab === "posts" && userPosts.map((post) => <PostCard key={post.uid} post={post} profile={true} />)}
       </section>
     </>
   );

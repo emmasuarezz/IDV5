@@ -49,6 +49,13 @@ function Post() {
       audio.pause();
     }
   };
+  const handleNameClick = () => {
+    if (currentPost?.uid == auth.currentUser?.uid) {
+      navigate("/profile");
+    } else {
+      navigate(`/userProfile/${currentPost?.uid}`);
+    }
+  };
 
   if (isLoading) {
     return (
@@ -84,18 +91,7 @@ function Post() {
         </section>
         <section className={styles.postContent}>
           <h2 className={styles.displayName}>
-            posted by{" "}
-            <span
-              onClick={() => {
-                if (currentPost?.uid == auth.currentUser?.uid) {
-                  navigate("/profile");
-                } else {
-                  navigate(`/userProfile/${currentPost?.uid}`);
-                }
-              }}
-            >
-              {currentPost?.displayName}
-            </span>
+            posted by <span onClick={() => handleNameClick()}>{currentPost?.displayName}</span>
           </h2>
           <h2>{currentPost?.title}</h2>
           <p>{currentPost?.message}</p>
@@ -107,6 +103,7 @@ function Post() {
               delete post
             </button>
           )}
+          <div></div>
         </section>
       </section>
     </>

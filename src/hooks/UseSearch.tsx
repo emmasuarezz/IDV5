@@ -35,7 +35,7 @@ export const mapTracks = (data: TrackObject[]): MappedTrack[] => {
     };
   });
 };
-const mapAlbums = (data: AlbumObject[]): MappedAlbum[] => {
+export const mapAlbums = (data: AlbumObject[]): MappedAlbum[] => {
   return data.map((album: AlbumObject) => {
     return {
       uid: album.id,
@@ -67,7 +67,6 @@ function useSearch() {
     const data = await res.json();
     return data;
   };
-
   const searchMutation = useMutation(searchFn, {
     onSuccess: async (data) => {
       let resultsArray = [];

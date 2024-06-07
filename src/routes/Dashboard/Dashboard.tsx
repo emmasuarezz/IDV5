@@ -1,5 +1,6 @@
 import { PostCard, SelectedCard, WelcomeCard } from "./Components";
 import styles from "../../styles/dashboard.module.scss";
+import utils from "../../styles/utils.module.scss";
 import { useUserContext } from "../../contexts/UserContext";
 import { useEffect, useState } from "react";
 import { firestore } from "../../firebase";
@@ -54,7 +55,9 @@ function Dashboard() {
           {posts.length > 0 ? (
             posts.map((post) => <PostCard key={post.id} post={post} />)
           ) : (
-            <p className={styles.fetchingPosts}>Loading...</p>
+            <section className={utils.loadingState}>
+              <h2>Loading posts...</h2>
+            </section>
           )}
         </section>
       </section>
