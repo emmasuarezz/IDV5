@@ -77,7 +77,7 @@ function Dashboard() {
         <p>
           Happy release day for{" "}
           <a href={bpitchLink} target="_blank">
-            BPitch
+            BPitch Control
           </a>
           !
         </p>

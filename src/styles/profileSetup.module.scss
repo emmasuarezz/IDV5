@@ -217,6 +217,10 @@
           font-weight: 400;
           color: vars.$secondary-color;
         }
+
+        @media screen and (max-width: 768px) {
+          font-size: 1.5rem;
+        }
       }
       //username
       div + p {
@@ -229,14 +233,12 @@
 
     .img_wrapper {
       position: relative;
-      width: 100%;
-      max-width: 175px;
-      height: 175px;
-      border-radius: 50%;
+
+      width: 175px;
       overflow: hidden;
       img {
         width: 100%;
-        height: 100%;
+
         object-fit: cover;
         border-radius: 50%;
       }
@@ -244,6 +246,7 @@
   }
   &_banners {
     margin: auto;
+    margin-bottom: 1rem;
     width: 100%;
     display: flex;
     flex-direction: column;

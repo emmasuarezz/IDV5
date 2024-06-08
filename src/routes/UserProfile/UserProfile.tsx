@@ -77,6 +77,7 @@ function UserProfile() {
   }
 
   async function handleAddFriend() {
+    setIsFriend("requestSent");
     try {
       const token = await auth.currentUser?.getIdToken();
       await fetch(`${import.meta.env.VITE_SERVER}/fb/addFriend/`, {
@@ -88,6 +89,7 @@ function UserProfile() {
         body: JSON.stringify({ userAdding: auth.currentUser?.uid, userRecieving: userUID }),
       });
     } catch (error) {
+      setIsFriend(undefined);
       console.error(error);
     }
   }

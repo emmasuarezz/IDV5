@@ -32,10 +32,10 @@ function Post() {
         if (auth.currentUser?.uid) {
           if (data.likes.users.includes(auth.currentUser.uid)) {
             setLikeClicked(true);
-            setLikes(data.likes.amount);
           }
         }
         setCurrentPost(data);
+        setLikes(data.likes.amount);
         setIsLoading(false);
       } catch (error) {
         console.error(error);
