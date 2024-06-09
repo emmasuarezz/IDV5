@@ -5,11 +5,14 @@ import utils from "../../styles/utils.module.scss";
 import { PostCard } from "../Dashboard/Components";
 import { Post } from "../Dashboard/Dashboard";
 import { auth } from "../../firebase";
+import { useGetFriends } from "../../hooks/useGetFriends";
+import UserCard from "../../components/UserCard/UserCard";
 
 function Profile() {
   const [activeTab, setActiveTab] = useState("posts");
   const [userPosts, setUserPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const { friends } = useGetFriends(auth.currentUser?.uid || "");
   const { user } = useAuth();
 
   useEffect(() => {
@@ -77,6 +80,7 @@ function Profile() {
       </section>
       <section className={`${utils.flex_wrap} ${utils.g2} ${utils.w_full} ${utils.p1} ${utils.jcenter}`}>
         {activeTab === "posts" && userPosts.map((post) => <PostCard key={post.id} post={post} profile={true} />)}
+        {activeTab === "friends" && friends.map((friend) => <UserCard key={friend.uid} result={friend} />)}
       </section>
     </>
   );

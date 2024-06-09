@@ -93,6 +93,23 @@ function UserProfile() {
       console.error(error);
     }
   }
+  async function handleRemoveFriend() {
+    setIsFriend("notFriends");
+    try {
+      const token = await auth.currentUser?.getIdToken();
+      const uid = auth.currentUser?.uid;
+      await fetch(`${import.meta.env.VITE_SERVER}/fb/removeFriend/${uid}/${user?.uid}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    } catch (error) {
+      setIsFriend("friends");
+      console.error(error);
+    }
+  }
 
   return (
     <>
@@ -109,7 +126,6 @@ function UserProfile() {
             <p>@{user?.username}</p>
           </div>
         </section>
-        {/* <button className={styles.editProfile}>edit profile</button> */}
       </section>
       {/* Posts and friends tabs */}
       <section className={`${utils.flex} ${utils.g2} ${utils.w_full}`}>
@@ -119,9 +135,19 @@ function UserProfile() {
         >
           posts
         </button>
-        {isFriend && (
-          <button className={`${utils.cta}`} onClick={() => handleAddFriend()} disabled={isFriend !== "notFriends"}>
-            {isFriend === "notFriends" ? "add friend" : isFriend === "requestSent" ? "request sent" : "friends"}
+        {isFriend == "notFriends" && (
+          <button className={`${utils.cta}`} onClick={() => handleAddFriend()}>
+            add friend
+          </button>
+        )}
+        {isFriend == "friends" && (
+          <button className={`${utils.cta} ${utils.danger}`} onClick={handleRemoveFriend}>
+            remove friend
+          </button>
+        )}
+        {isFriend == "requestSent" && (
+          <button className={`${utils.cta}`} disabled>
+            request sent
           </button>
         )}
       </section>
@@ -131,5 +157,12 @@ function UserProfile() {
     </>
   );
 }
+
+// <>
+//   <button className={`${utils.cta}`} onClick={() => handleAddFriend()} >
+//     {isFriend === "notFriends" ? "add friend" : isFriend === "requestSent" ? "request sent" : "friends"}
+//   </button>
+//   <button className={`${utils.cta} ${utils.danger}`}>remove friend</button>
+// </> : null
 
 export default UserProfile;

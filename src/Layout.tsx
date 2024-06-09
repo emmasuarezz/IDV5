@@ -2,7 +2,9 @@ import { ReactNode, useEffect, useState } from "react";
 import { useAuth } from "./hooks/UseAuth";
 import { useUserContext } from "./contexts/UserContext";
 import { Link, useNavigate } from "react-router-dom";
-import { auth } from "./firebase";
+import { auth, firestore } from "./firebase";
+import { onSnapshot, collection, DocumentChange } from "firebase/firestore";
+import { NotificationsModal } from "./components";
 import styles from "./styles/layout.module.scss";
 import utils from "./styles/utils.module.scss";
 import github from "./assets/githubIcon.png";
@@ -17,7 +19,8 @@ const Layout = ({ children }: LayoutProps) => {
   const { setUser } = useUserContext();
   const navigate = useNavigate();
   const [menuClicked, setMenuClicked] = useState(false);
-
+  const [notificationsModal, setNotificationsModal] = useState(false);
+  const [newNotification, setNewNotification] = useState(false);
   //change the active link in the sidebar
   const changeActiveLink = (e: React.MouseEvent<HTMLLIElement>, where: string) => {
     const links = document.querySelectorAll("nav ul li");
@@ -50,17 +53,47 @@ const Layout = ({ children }: LayoutProps) => {
     }
   }, [user]);
 
+  useEffect(() => {
+    if (user) {
+      const unsubscribe = onSnapshot(collection(firestore, "users", user.uid, "notifications"), (snapshot) => {
+        snapshot.docChanges().forEach((change: DocumentChange) => {
+          if (change.type === "added") {
+            setNewNotification(true);
+          }
+        });
+      });
+      return () => unsubscribe();
+    }
+  }, [user]);
+
   return (
     <>
       <div className={`${utils.flexCol}  ${utils.p1} ${utils.hScreen}`}>
         <section className={styles.sidebar}>
-          <div onClick={() => setMenuClicked(!menuClicked)} className={styles.hamburger}>
-            {menuClicked ? "X" : "|||"}
+          <div
+            onClick={() => {
+              if (!newNotification) {
+                setMenuClicked(!menuClicked);
+              } else {
+                setNewNotification(false);
+                setMenuClicked(!menuClicked);
+              }
+            }}
+            className={styles.hamburger}
+          >
+            {newNotification ? "New notifications" : menuClicked ? "X" : "|||"}
           </div>
           {menuClicked && (
             <div className={styles.hamburger_menu}>
-              <p onClick={() => handleSignOut()}>Sign out?</p>
-              <p>Notifications</p>
+              <p
+                onClick={() => {
+                  setMenuClicked(false);
+                  setNotificationsModal(true);
+                }}
+              >
+                Notifications
+              </p>
+              <p onClick={() => handleSignOut()}>Sign out</p>
             </div>
           )}
           <nav>
@@ -86,7 +119,11 @@ const Layout = ({ children }: LayoutProps) => {
             </div>
           </div>
         </section>
-        <div className={styles.main}>{children}</div>
+        <div className={styles.main}>
+          {notificationsModal && <NotificationsModal setNotificationsModal={setNotificationsModal} />}
+
+          {children}
+        </div>
         <footer className={utils.mt_auto}>
           <h3>
             Made with love by{" "}

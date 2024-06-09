@@ -1,0 +1,150 @@
+@use "../vars";
+
+.modal {
+  z-index: 9999999;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 680px;
+  background-color: #000;
+  border: solid 2px vars.$green;
+  border-radius: 5px;
+  min-height: 340px;
+  display: flex;
+  flex-direction: column;
+
+  & > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: solid 2px vars.$green;
+    h1 {
+      color: vars.$green;
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin: 0;
+      padding: 1rem;
+    }
+    p {
+      color: vars.$green;
+      font-size: 1.2rem;
+      font-weight: 400;
+      margin: 0;
+      padding: 1rem;
+      opacity: 0.75;
+
+      transition: all 0.3s ease-in-out;
+      &:hover {
+        cursor: pointer;
+        color: white;
+        opacity: 1;
+        transition: all 0.3s ease-in-out;
+      }
+    }
+  }
+
+  .notificationsTabs {
+    z-index: 9999;
+    background-color: #000;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    ul {
+      display: flex;
+      width: 100%;
+      justify-content: space-around;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      li {
+        width: 100%;
+        padding: 0.5rem;
+        color: white;
+        font-size: 1.2rem;
+        font-weight: 600;
+        text-align: center;
+        transition: all 0.3s ease-in-out;
+        &:hover {
+          cursor: pointer;
+          color: #000;
+          font-weight: 700;
+          background-color: vars.$green;
+          transition: all 0.3s ease-in-out;
+        }
+      }
+    }
+  }
+}
+
+.activeTab {
+  color: #000 !important;
+  font-weight: 700 !important;
+  background-color: vars.$green;
+  transition: all 0.3s ease-in-out;
+}
+.notificationsContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem;
+  gap: 0.5rem;
+  max-height: 215px;
+  overflow-y: scroll;
+  .notification {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    border: solid 2px vars.$green;
+    border-radius: 5px;
+    padding: 0.5rem;
+    img {
+      width: 75px;
+      border: solid 2px vars.$secondary-color;
+      border-radius: 50%;
+    }
+    p {
+      span {
+        color: vars.$green;
+        font-style: italic;
+        font-weight: 600;
+      }
+      color: white;
+      font-size: 1.2rem;
+      font-weight: 400;
+      margin: 0;
+      padding: 0.5rem;
+    }
+    .actions {
+      margin-left: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      button {
+        font-size: 0.85rem;
+        width: 100%;
+        padding-block: 0.4rem;
+        color: #000;
+        background-color: vars.$green;
+        & + button {
+          background-color: vars.$red;
+        }
+      }
+      p {
+        color: white;
+        font-size: 0.75rem;
+        font-weight: 500;
+        opacity: 0.85;
+        transition: all 0.3s ease-in-out;
+        &:hover {
+          cursor: pointer;
+          color: vars.$red;
+          opacity: 1;
+          transition: all 0.3s ease-in-out;
+        }
+      }
+    }
+  }
+}

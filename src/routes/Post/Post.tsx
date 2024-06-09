@@ -131,14 +131,7 @@ function Post() {
           </h2>
           <h2>{currentPost?.title}</h2>
           <p>{currentPost?.message}</p>
-          {auth.currentUser?.uid == currentPost?.uid && (
-            <button
-              className={`${styles.deletePost} ${utils.cta} ${utils.danger}`}
-              onClick={() => setDeleteModal(true)}
-            >
-              delete post
-            </button>
-          )}
+
           <div className={styles.interactionSection}>
             <img
               className={styles.heartIcon}
@@ -147,6 +140,14 @@ function Post() {
               onClick={() => handleLikeClick()}
             />
             <h3 className={`${utils.ml_1}`}>{likes}</h3>
+            {auth.currentUser?.uid == currentPost?.uid && (
+              <button
+                className={`${styles.deletePost} ${utils.cta} ${utils.danger}`}
+                onClick={() => setDeleteModal(true)}
+              >
+                delete post
+              </button>
+            )}
           </div>
         </section>
       </section>
