@@ -16,7 +16,6 @@ export default function DeleteModal({ id, setDeleteModal }: { id: string; setDel
         },
       });
       if (response.ok) {
-        console.log("Post deleted");
         navigate("/dashboard");
       }
     } catch {
@@ -24,15 +23,17 @@ export default function DeleteModal({ id, setDeleteModal }: { id: string; setDel
     }
   };
   return (
-    <div className={styles.modal}>
-      <p onClick={() => setDeleteModal(false)}>nevermind, go back</p>
-      <div className={`${utils.flexCol} ${utils.icenter}`}>
-        <h2>Are you sure you want to delete this post?</h2>
-        <p>This action is irreversible</p>
-      </div>
-      <button className={`${styles.deletePost} ${utils.cta} ${utils.danger}`} onClick={() => handleDelete(id)}>
-        delete post
-      </button>
+    <div className={utils.modalBg}>
+      <section className={styles.modal}>
+        <p onClick={() => setDeleteModal(false)}>nevermind, go back</p>
+        <div className={`${utils.flexCol} ${utils.icenter}`}>
+          <h2>Are you sure you want to delete this post?</h2>
+          <p>This action is irreversible</p>
+        </div>
+        <button className={`${styles.deletePost} ${utils.cta} ${utils.danger}`} onClick={() => handleDelete(id)}>
+          delete post
+        </button>
+      </section>
     </div>
   );
 }

@@ -5,6 +5,8 @@ import { useUserContext } from "../../../contexts/UserContext";
 import { signInWithCustomToken } from "firebase/auth";
 import { auth } from "../../../firebase";
 import { UserContextType } from "../../../contexts/UserContext";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 type Inputs = {
   name: string;
   email: string;
@@ -22,6 +24,45 @@ function SignUp({ setLoading }: { setLoading: (loading: boolean) => void }) {
   const { setUser } = useUserContext();
   const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
   const passwordValue = watch("password");
+  const navigate = useNavigate();
+
+  //
+  const provider = new GoogleAuthProvider();
+  async function signInWithGoogle() {
+    signInWithPopup(auth, provider)
+      .then(async (result) => {
+        const user = result.user;
+        const token = await auth.currentUser?.getIdToken();
+        if (user) {
+          const uid = user.uid;
+          const userResponse = await fetch(import.meta.env.VITE_SERVER + "/fb/getUser/" + uid, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          const userData = await userResponse.text();
+          if (userData === "User does not exist") {
+            const newUser = {
+              email: user.email,
+              displayName: user.displayName,
+              avatar: user.photoURL,
+              username: "NEWUSER",
+              uid: user.uid,
+            };
+            console.log(newUser);
+            setUser(newUser as UserContextType);
+            navigate("/dashboard");
+          }
+        }
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+      });
+  }
 
   const signUpFn = async (data: Inputs): Promise<UserContextType> => {
     setLoading(true);
@@ -42,8 +83,7 @@ function SignUp({ setLoading }: { setLoading: (loading: boolean) => void }) {
   };
 
   const signUpMutation = useMutation(signUpFn, {
-    onSettled: (data) => {
-      console.log(data);
+    onSettled: () => {
       setLoading(false);
     },
     onError: (error) => {
@@ -86,6 +126,9 @@ function SignUp({ setLoading }: { setLoading: (loading: boolean) => void }) {
         />
         {errors.confirmPassword && <p className={styles.errorMessage}>{errors.confirmPassword.message}</p>}
         <button type="submit">sign up</button>
+        <button type="button" onClick={signInWithGoogle}>
+          sign up with google
+        </button>
       </form>
     </>
   );

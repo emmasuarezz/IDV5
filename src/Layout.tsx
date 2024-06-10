@@ -1,10 +1,9 @@
 import { ReactNode, useEffect, useState } from "react";
 import { useAuth } from "./hooks/UseAuth";
-import { useUserContext } from "./contexts/UserContext";
 import { Link, useNavigate } from "react-router-dom";
-import { auth, firestore } from "./firebase";
+import { firestore } from "./firebase";
 import { onSnapshot, collection, DocumentChange } from "firebase/firestore";
-import { NotificationsModal } from "./components";
+import { NotificationsModal, SignOutModal } from "./components";
 import styles from "./styles/layout.module.scss";
 import utils from "./styles/utils.module.scss";
 import github from "./assets/githubIcon.png";
@@ -16,10 +15,10 @@ type LayoutProps = {
 
 const Layout = ({ children }: LayoutProps) => {
   const { user } = useAuth();
-  const { setUser } = useUserContext();
   const navigate = useNavigate();
   const [menuClicked, setMenuClicked] = useState(false);
   const [notificationsModal, setNotificationsModal] = useState(false);
+  const [signOutModal, setSignOutModal] = useState(false);
   const [newNotification, setNewNotification] = useState(false);
   //change the active link in the sidebar
   const changeActiveLink = (e: React.MouseEvent<HTMLLIElement>, where: string) => {
@@ -37,21 +36,12 @@ const Layout = ({ children }: LayoutProps) => {
     (e.target as HTMLElement).classList.remove(styles.inactive);
     (e.target as HTMLElement).classList.add(styles.active);
   };
-  const handleSignOut = async () => {
-    try {
-      await auth.signOut();
-      setUser(undefined);
-      navigate("/");
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   useEffect(() => {
     if (user?.username === undefined || user?.username === "NEWUSER") {
       navigate("/profileSetup");
     }
-  }, [user]);
+  }, [user, navigate]);
 
   useEffect(() => {
     if (user) {
@@ -93,7 +83,14 @@ const Layout = ({ children }: LayoutProps) => {
               >
                 Notifications
               </p>
-              <p onClick={() => handleSignOut()}>Sign out</p>
+              <p
+                onClick={() => {
+                  setMenuClicked(false);
+                  setSignOutModal(true);
+                }}
+              >
+                Sign out
+              </p>
             </div>
           )}
           <nav>
@@ -121,6 +118,7 @@ const Layout = ({ children }: LayoutProps) => {
         </section>
         <div className={styles.main}>
           {notificationsModal && <NotificationsModal setNotificationsModal={setNotificationsModal} />}
+          {signOutModal && <SignOutModal setSignOutModal={setSignOutModal} />}
 
           {children}
         </div>

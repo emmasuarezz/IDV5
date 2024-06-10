@@ -21,23 +21,14 @@ function PreviewCard({
 
     if (overflow) {
       setOverflowAmount(overflow);
-      console.log(overflow, result.name);
     }
   }, [result.name]);
 
   return (
-    <div
-      key={result.uid}
-      className={styles.previewCard}
-      tabIndex={0}
-      onClick={() => setSelected(result)}
-    >
+    <div key={result.uid} className={styles.previewCard} tabIndex={0} onClick={() => setSelected(result)}>
       <img src={result.cover} alt="album" />
       <div className={styles.previewInfo}>
-        <h2
-          ref={trackTitleRef}
-          className={overflowAmount ? styles.marqueeAnimation : ""}
-        >
+        <h2 ref={trackTitleRef} className={overflowAmount ? styles.marqueeAnimation : ""}>
           {result.name}
         </h2>
         <p>{result.album}</p>

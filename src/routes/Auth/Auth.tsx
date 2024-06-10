@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useUserContext, UserContextType } from "../../contexts/UserContext";
 
 function Auth() {
-  const [signIn, setSignIn] = useState(true);
+  const [signIn, setSignIn] = useState(false);
   const [loading, setLoading] = useState(false);
   const [invalidCredentials, setInvalidCredentials] = useState(false);
   const { setUser } = useUserContext();

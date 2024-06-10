@@ -1,0 +1,20 @@
+@use "../vars";
+
+.modal {
+  width: 300px;
+  padding: 1rem;
+  background-color: #000;
+  border: 2px solid vars.$green;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  color: vars.$secondary-color;
+
+  h2 {
+    color: vars.$primary-color;
+    font-weight: 600;
+  }
+}

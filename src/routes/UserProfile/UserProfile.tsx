@@ -7,7 +7,7 @@ import { Post } from "../Dashboard/Dashboard";
 import { auth } from "../../firebase";
 import { UserContextType } from "../../contexts/UserContext";
 
-type Relationship = "friends" | "requestSent" | "notFriends" | undefined;
+type Relationship = "friends" | "requestSent" | "notFriends" | "requestRecieved" | undefined;
 
 function UserProfile() {
   const [activeTab, setActiveTab] = useState("posts");
@@ -16,6 +16,7 @@ function UserProfile() {
   const [user, setUser] = useState<UserContextType>(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [isFriend, setIsFriend] = useState<Relationship>(undefined);
+  const [accepting, setAccepting] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -110,6 +111,25 @@ function UserProfile() {
       console.error(error);
     }
   }
+  const handleAccept = async () => {
+    setAccepting(true);
+    try {
+      const token = await auth.currentUser?.getIdToken();
+      const currentUserUID = auth.currentUser?.uid;
+      await fetch(`${import.meta.env.VITE_SERVER}/fb/acceptFriendRequest/${userUID}/${currentUserUID}/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setAccepting(false);
+      setIsFriend("friends");
+    } catch (error) {
+      setAccepting(false);
+      console.error(error);
+    }
+  };
 
   return (
     <>
@@ -124,6 +144,7 @@ function UserProfile() {
               <p>{user?.pronouns}</p>
             </div>
             <p>@{user?.username}</p>
+            {user?.username == "tenzo" && <p className={utils.adminText}>admin {"<3"}</p>}
           </div>
         </section>
       </section>
@@ -149,6 +170,11 @@ function UserProfile() {
           <button className={`${utils.cta}`} disabled>
             request sent
           </button>
+        )}{" "}
+        {isFriend == "requestRecieved" && (
+          <button className={`${utils.cta}`} onClick={() => handleAccept()} disabled={accepting}>
+            {accepting ? "accepting" : "accept request"}
+          </button>
         )}
       </section>
       <section className={`${utils.flex_wrap} ${utils.g2} ${utils.w_full} ${utils.p1} ${utils.jcenter}`}>
@@ -157,12 +183,5 @@ function UserProfile() {
     </>
   );
 }
-
-// <>
-//   <button className={`${utils.cta}`} onClick={() => handleAddFriend()} >
-//     {isFriend === "notFriends" ? "add friend" : isFriend === "requestSent" ? "request sent" : "friends"}
-//   </button>
-//   <button className={`${utils.cta} ${utils.danger}`}>remove friend</button>
-// </> : null
 
 export default UserProfile;

@@ -5,7 +5,6 @@ import { auth } from "../../../firebase";
 import { Auth, signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { UserContextType } from "../../../contexts/UserContext";
-
 import { useUserContext } from "../../../contexts/UserContext";
 
 type Inputs = {
@@ -30,6 +29,8 @@ function SignInForm({
   } = useForm<Inputs>();
   const { setUser } = useUserContext();
   const navigate = useNavigate();
+
+  //Google Sign In
 
   //////////////////////////////////////////
   const signInFn = async ({ auth, email, password }: { auth: Auth; email: string; password: string }) => {
@@ -115,7 +116,6 @@ function SignInForm({
           sign in
         </button>
       </form>
-      <p className={styles.forgotPW}>forgot your password?</p>
     </>
   );
 }

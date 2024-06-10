@@ -23,7 +23,6 @@ export type MappedAlbum = {
 
 export const mapTracks = (data: TrackObject[]): MappedTrack[] => {
   return data.map((track: TrackObject) => {
-    console.log(track.preview_url);
     return {
       uid: track.id,
       name: track.name,

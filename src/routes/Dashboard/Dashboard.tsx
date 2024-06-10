@@ -47,6 +47,7 @@ function Dashboard() {
             ...doc.data(),
           } as Post)
       );
+      newPosts.sort((a, b) => b.timestamp.toDate().getTime() - a.timestamp.toDate().getTime());
       setPosts(newPosts);
     });
 

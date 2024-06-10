@@ -59,6 +59,7 @@ function Profile() {
               <p>{user?.pronouns}</p>
             </div>
             <p>@{user?.username}</p>
+            {user?.username == "tenzo" && <p className={utils.adminText}>admin {"<3"}</p>}
           </div>
         </section>
         {/* <button className={styles.editProfile}>edit profile</button> */}

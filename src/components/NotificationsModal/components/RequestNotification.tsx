@@ -11,19 +11,74 @@ export default function RequestNotification({
 }: {
   notification: RequestNotificationType;
   accept?: boolean;
-  showModal?: (value: boolean) => void;
+  showModal: (value: boolean) => void;
 }) {
   const [accepting, setAccepting] = useState(false);
-  const [accepted, setAccepted] = useState(false);
   const [clearing, setClearing] = useState(false);
   const navigate = useNavigate();
 
   const AcceptedNotification = () => {
     return (
       <div className={styles.notification}>
-        <img src={notification.user.thumbnail} alt="" />
+        <img
+          onClick={() => {
+            showModal(false);
+            navigate(`/userProfile/${notification.user.uid}`);
+          }}
+          src={notification.user.thumbnail}
+          alt=""
+        />
         <p>
           <span>{notification.user.displayName}</span> is now your friend!
+        </p>
+        <div className={`${styles.actions} ${utils.flexCol}`}>
+          <button
+            className={`${utils.cta} ${clearing ? utils.hidden : ""}`}
+            onClick={() => {
+              if (showModal) {
+                showModal(false);
+              }
+              navigate(`/userProfile/${notification.user.uid}`);
+            }}
+          >
+            go to profile
+          </button>
+          <button className={utils.cta} onClick={handleClear}>
+            {clearing ? "clearing" : "clear"}
+          </button>
+        </div>
+      </div>
+    );
+  };
+  const RequestNotification = () => {
+    return (
+      <div className={styles.notification}>
+        <img
+          onClick={() => {
+            showModal(false);
+            navigate(`/userProfile/${notification.user.uid}`);
+          }}
+          src={notification.user.thumbnail}
+          alt=""
+        />
+        <p>
+          <span>{notification.user.displayName}</span> wants to be your friend
+        </p>
+        <div className={`${styles.actions} ${utils.flexCol}`}>
+          <button className={utils.cta} onClick={handleAccept}>
+            {accepting ? "accepting" : "accept"}
+          </button>
+          {!accepting && <button className={utils.cta}>decline</button>}
+        </div>
+      </div>
+    );
+  };
+  const TheyAcceptedNotification = () => {
+    return (
+      <div className={styles.notification}>
+        <img src={notification.user.thumbnail} alt="" />
+        <p>
+          <span>{notification.user.displayName}</span> accepted your request
         </p>
         <div className={`${styles.actions} ${utils.flexCol}`}>
           <button
@@ -50,19 +105,13 @@ export default function RequestNotification({
       setAccepting(true);
       const token = await auth.currentUser?.getIdToken();
       const currentUserUID = auth.currentUser?.uid;
-      await fetch(
-        `${import.meta.env.VITE_SERVER}/fb/acceptFriendRequest/${notification.user.uid}/${currentUserUID}/${
-          notification.id
-        }`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setAccepted(true);
+      await fetch(`${import.meta.env.VITE_SERVER}/fb/acceptFriendRequest/${notification.user.uid}/${currentUserUID}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
     } catch (error) {
       console.error(error);
     }
@@ -71,7 +120,6 @@ export default function RequestNotification({
     setClearing(true);
     try {
       const token = await auth.currentUser?.getIdToken();
-      console.log(token);
       const uid = auth.currentUser?.uid;
       await fetch(`${import.meta.env.VITE_SERVER}/fb/deleteNotification/${uid}/${notification.id}`, {
         method: "DELETE",
@@ -86,48 +134,6 @@ export default function RequestNotification({
     }
   };
 
-  if (!accept) {
-    if (accepted) {
-      return <AcceptedNotification />;
-    }
-    return (
-      <div className={styles.notification}>
-        <img src={notification.user.thumbnail} alt="" />
-        <p>
-          <span>{notification.user.displayName}</span> wants to be your friend
-        </p>
-        <div className={`${styles.actions} ${utils.flexCol}`}>
-          <button className={utils.cta} onClick={handleAccept}>
-            {accepting ? "accepting" : "accept"}
-          </button>
-          {!accepting && <button className={utils.cta}>decline</button>}
-        </div>
-      </div>
-    );
-  } else {
-    return (
-      <div className={styles.notification}>
-        <img src={notification.user.thumbnail} alt="" />
-        <p>
-          <span>{notification.user.displayName}</span> accepted your request
-        </p>
-        <div className={`${styles.actions} ${utils.flexCol}`}>
-          <button
-            className={`${utils.cta} ${clearing ? utils.hidden : ""}`}
-            onClick={() => {
-              if (showModal) {
-                showModal(false);
-              }
-              navigate(`/userProfile/${notification.user.uid}`);
-            }}
-          >
-            go to profile
-          </button>
-          <button className={utils.cta} onClick={handleClear}>
-            {clearing ? "clearing" : "clear"}
-          </button>
-        </div>
-      </div>
-    );
-  }
+  if (accept) return <AcceptedNotification />;
+  return notification.type === "accept" ? <TheyAcceptedNotification /> : <RequestNotification />;
 }

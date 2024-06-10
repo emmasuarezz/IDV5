@@ -18,7 +18,6 @@ export default function LikeNotification({
     setClearing(true);
     try {
       const token = await auth.currentUser?.getIdToken();
-      console.log(token);
       const uid = auth.currentUser?.uid;
       await fetch(`${import.meta.env.VITE_SERVER}/fb/deleteNotification/${uid}/${notification.id}`, {
         method: "DELETE",
@@ -34,7 +33,14 @@ export default function LikeNotification({
 
   return (
     <div className={styles.notification}>
-      <img src={notification.user.thumbnail} alt="" />
+      <img
+        onClick={() => {
+          showModal(false);
+          navigate(`/userProfile/${notification.user.uid}`);
+        }}
+        src={notification.user.thumbnail}
+        alt=""
+      />
       <p>
         <span>{notification.user.displayName}</span> liked your post
       </p>

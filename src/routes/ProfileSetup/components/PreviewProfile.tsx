@@ -19,6 +19,7 @@ function PreviewProfile({ userPreview }: { userPreview: UserPreviewType }) {
 
   const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
+    setValidUsername(false);
     if (value.charAt(0) !== "@") {
       setUsername("@" + value);
     } else {
@@ -59,6 +60,7 @@ function PreviewProfile({ userPreview }: { userPreview: UserPreviewType }) {
     setCompleted(true);
     const avatarUrl = userPreview.avatar;
     const token = await auth.currentUser?.getIdToken();
+    console.log(token, "this is the token");
     const finalUsername = username.charAt(0) === "@" ? username.slice(1) : username;
     const avatarFilename = avatarUrl.split("/").pop();
     const bannerFilename = bannerUrl.split("/").pop();
@@ -67,6 +69,7 @@ function PreviewProfile({ userPreview }: { userPreview: UserPreviewType }) {
     const request = { user: userPreview, bannerId: bannerId, username: finalUsername, avatarId: avatarId };
 
     try {
+      console.log(auth.currentUser?.uid, "this is the uid");
       const response = await fetch(import.meta.env.VITE_SERVER + "/fb/finishSetup/" + auth.currentUser?.uid, {
         method: "POST",
         headers: {
@@ -76,13 +79,14 @@ function PreviewProfile({ userPreview }: { userPreview: UserPreviewType }) {
         body: JSON.stringify(request),
       });
       const responseJson = await response.json();
-      console.log(request);
-      console.log(responseJson);
+      console.log(responseJson, "this is returning");
+
       if (responseJson) {
         setUser(responseJson as UserContextType);
         navigate("/dashboard");
       }
     } catch (error) {
+      setCompleted(false);
       console.log(error);
     }
   };
