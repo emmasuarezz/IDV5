@@ -113,7 +113,7 @@ function PreviewProfile({ userPreview }: { userPreview: UserPreviewType }) {
         <div>
           <input value={username} onChange={(e) => handleUsernameChange(e)} type="text" placeholder="@username" />
           <button disabled={errorUsername !== ""} onClick={handleUsernameSubmit} className={styles.cta}>
-            ok
+            check
           </button>
         </div>
         {errorUsername && <p className={styles.error}>{errorUsername}</p>}
