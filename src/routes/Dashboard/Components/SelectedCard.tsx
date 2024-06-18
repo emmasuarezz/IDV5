@@ -18,20 +18,16 @@ function SelectedCard({ track }: { track: MappedTrack }) {
   };
 
   return (
-    <a
-      className={styles.selectedCard}
-      href={track.spotify_url}
-      target="_blank"
-      onMouseEnter={() => handlePlay()}
-      onMouseLeave={() => handlePause()}
-    >
-      <img src={track.cover} alt="" />
+    <div className={styles.selectedCard}>
+      <img onMouseEnter={() => handlePlay()} onMouseLeave={() => handlePause()} src={track.cover} alt="" />
       <div>
-        <h1>{track.name}</h1>
+        <a target="_blank" href={track.spotify_url}>
+          {track.name}
+        </a>
         <p>{track.artist}</p>
       </div>
       <audio ref={audioRef} src={track.preview} style={{ display: "hidden" }}></audio>
-    </a>
+    </div>
   );
 }
 

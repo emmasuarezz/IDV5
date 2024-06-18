@@ -125,6 +125,11 @@
       color: #d87cac;
       font-weight: 700;
     }
+
+    @media (max-width: 768px) {
+      margin: 0;
+      font-size: 1.2rem;
+    }
   }
 
   .formGroup {

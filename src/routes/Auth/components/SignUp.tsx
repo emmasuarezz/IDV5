@@ -66,8 +66,8 @@ function SignUp({ setLoading }: { setLoading: (loading: boolean) => void }) {
 
   const signUpFn = async (data: Inputs): Promise<UserContextType> => {
     setLoading(true);
-    const { email, password, name } = data;
-    const reqBody = { userEmail: email, password, name };
+    const { email, password } = data;
+    const reqBody = { userEmail: email, password };
     const response = await fetch(import.meta.env.VITE_SERVER + "/user/signUp", {
       method: "POST",
       headers: {
@@ -77,7 +77,7 @@ function SignUp({ setLoading }: { setLoading: (loading: boolean) => void }) {
     });
     const { loginToken, uid, username } = await response.json();
     await signInWithCustomToken(auth, loginToken);
-    const newUser = { email: email, displayName: name, avatar: "", thumbnail: "", username: username, uid: uid };
+    const newUser = { email: email, displayName: "", avatar: "", thumbnail: "", username: username, uid: uid };
     setUser(newUser as UserContextType);
     return newUser as UserContextType;
   };
@@ -95,8 +95,6 @@ function SignUp({ setLoading }: { setLoading: (loading: boolean) => void }) {
     <>
       <h2>Are you ready to share some tunes?</h2>
       <form className={styles.formGroup} onSubmit={handleSubmit((data) => signUpMutation.mutate(data))}>
-        <input {...register("name", { required: `it can't be empty` })} type="text" placeholder="name" />
-        {errors.name && <p className={styles.errorMessage}>{errors.name.message}</p>}
         <input
           {...register("email", {
             required: "email is required",
@@ -122,7 +120,7 @@ function SignUp({ setLoading }: { setLoading: (loading: boolean) => void }) {
             validate: (value) => value === passwordValue || "The passwords do not match",
           })}
           type="password"
-          placeholder="confirm password"
+          placeholder="repeat password"
         />
         {errors.confirmPassword && <p className={styles.errorMessage}>{errors.confirmPassword.message}</p>}
         <button type="submit">sign up</button>

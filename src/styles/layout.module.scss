@@ -147,7 +147,7 @@ $font-spacing: 100;
   cursor: pointer;
   user-select: none;
   transition: all 0.3s ease;
-
+  font-weight: 900;
   &:hover {
     color: vars.$green;
     transition: all 0.3s ease;

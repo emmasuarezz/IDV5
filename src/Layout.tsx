@@ -71,7 +71,7 @@ const Layout = ({ children }: LayoutProps) => {
             }}
             className={styles.hamburger}
           >
-            {newNotification ? "New notifications" : menuClicked ? "X" : "|||"}
+            {newNotification ? "+ 1" : menuClicked ? "X" : "☰"}
           </div>
           {menuClicked && (
             <div className={styles.hamburger_menu}>
@@ -122,23 +122,23 @@ const Layout = ({ children }: LayoutProps) => {
 
           {children}
         </div>
-        <footer className={utils.mt_auto}>
-          <h3>
-            Made with love by{" "}
-            <a href="https://tenzo.tech" target="_blank">
-              Tenzo
-            </a>{" "}
-          </h3>
-          <div className={styles.socials}>
-            <img onClick={() => window.open("https://github.com/emmasuarezz", "_blank")} src={github} alt="" />{" "}
-            <img
-              onClick={() => window.open("https://www.linkedin.com/in/emmanuelsuarezt/", "_blank")}
-              src={linkedin}
-              alt=""
-            />
-          </div>
-        </footer>
       </div>
+      <footer className={utils.mt_auto}>
+        <h3>
+          Made with love by{" "}
+          <a href="https://tenzo.tech" target="_blank">
+            Tenzo
+          </a>{" "}
+        </h3>
+        <div className={styles.socials}>
+          <img onClick={() => window.open("https://github.com/emmasuarezz", "_blank")} src={github} alt="" />{" "}
+          <img
+            onClick={() => window.open("https://www.linkedin.com/in/emmanuelsuarezt/", "_blank")}
+            src={linkedin}
+            alt=""
+          />
+        </div>
+      </footer>
     </>
   );
 };

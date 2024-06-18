@@ -110,6 +110,19 @@
     flex-wrap: wrap;
     justify-content: space-around;
   }
+
+  @media (max-width: 768px) {
+    .postsSection {
+      .posts {
+        gap: 0.5rem;
+      }
+    }
+
+    .selectionSection {
+      padding: 1rem;
+      padding-top: 1.5rem;
+    }
+  }
 }
 
 .soundcloudSection {

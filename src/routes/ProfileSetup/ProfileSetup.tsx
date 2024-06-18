@@ -9,14 +9,14 @@ export type UserPreviewType = {
   name: string;
   email: string;
   pronoun: string;
-  dateOfBirth: string;
+  zodiac: string;
   avatar: string;
 };
 const userPreviewInitial = {
   name: "",
   email: "",
   pronoun: "",
-  dateOfBirth: "",
+  zodiac: "",
   avatar: "",
 };
 
@@ -26,7 +26,7 @@ function ProfileSetup() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [pronoun, setPronoun] = useState("they/them");
-  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [zodiac, setZodiac] = useState("Aries");
   const [avatar, setAvatar] = useState<string | undefined>(undefined);
   // State for showing the different portions of the setup
   const [step, setStep] = useState(0);
@@ -44,7 +44,7 @@ function ProfileSetup() {
     if (name) profileData.name = name;
     if (email) profileData.email = email;
     if (pronoun) profileData.pronoun = pronoun;
-    if (dateOfBirth) profileData.dateOfBirth = dateOfBirth;
+    if (zodiac) profileData.zodiac = zodiac;
     if (avatar) profileData.avatar = avatar;
     setUserPreview(profileData as UserPreviewType);
   };
@@ -63,11 +63,25 @@ function ProfileSetup() {
         <>
           <ProfileSection title="This is what we know so far:">
             <div>
-              <input value={name} onChange={(e) => setName(e.target.value)} id="name" name="name" type="text" />
+              <input
+                placeholder="enter your name please"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                id="name"
+                name="name"
+                type="text"
+              />
               <label htmlFor="name">is your name</label>
             </div>
             <div>
-              <input value={email} onChange={(e) => setEmail(e.target.value)} id="email" name="email" type="text" />
+              <input
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                id="email"
+                name="email"
+                type="text"
+                disabled
+              />
               <label htmlFor="email">is your email</label>
             </div>
           </ProfileSection>
@@ -95,17 +109,24 @@ function ProfileSetup() {
                   </select>
                 </div>
               </ProfileSection>
-              <ProfileSection title="When were you born?">
+              <ProfileSection title="What's your zodiac sign?">
                 <div className={`${utils.flex}`}>
-                  <input
-                    type="date"
-                    name="dateOfBirth"
-                    id="dateOfBirth"
-                    value={dateOfBirth}
-                    onChange={(e) => setDateOfBirth(e.target.value)}
-                  />
+                  <select value={zodiac} onChange={(e) => setZodiac(e.target.value)} name="zodiac" id="">
+                    <option value="aries">Aries</option>
+                    <option value="taurus">Taurus</option>
+                    <option value="gemini">Gemini</option>
+                    <option value="cancer">Cancer</option>
+                    <option value="leo">Leo</option>
+                    <option value="virgo">Virgo</option>
+                    <option value="libra">Libra</option>
+                    <option value="scorpio">Scorpio</option>
+                    <option value="sagittarius">Sagittarius</option>
+                    <option value="capricorn">Capricorn</option>
+                    <option value="aquarius">Aquarius</option>
+                    <option value="pisces">Pisces</option>
+                  </select>
                   <button className={styles.cta} onClick={() => setStep(2)}>
-                    done!
+                    done
                   </button>
                 </div>
               </ProfileSection>
